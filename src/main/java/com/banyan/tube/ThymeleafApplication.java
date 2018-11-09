@@ -19,6 +19,7 @@
 package com.banyan.tube;
 
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("com.banyan.tube.mapper")
@@ -38,5 +39,8 @@ public class ThymeleafApplication {
 //				return messageRepository().findMessage(Long.valueOf(id));
 //			}
 //		};
+//	}
+//	public static void main(String[] args) {
+//		SpringApplication.run(TubeApplication.class, args);
 //	}
 }
