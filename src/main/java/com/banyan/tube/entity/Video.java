@@ -3,7 +3,7 @@ package com.banyan.tube.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TubeVideo implements Serializable {
+public class Video implements Serializable {
     private Integer id;
 
     private Integer owner;
@@ -28,13 +28,15 @@ public class TubeVideo implements Serializable {
 
     private Integer reward;
 
+    private Integer duration;
+
     private String description;
 
     private Byte accredit;
 
     private Integer type;
 
-    private Integer duration;
+    private String cover;
 
     private static final long serialVersionUID = 1L;
 
@@ -134,6 +136,14 @@ public class TubeVideo implements Serializable {
         this.reward = reward;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -158,11 +168,11 @@ public class TubeVideo implements Serializable {
         this.type = type;
     }
 
-    public Integer getDuration() {
-        return duration;
+    public String getCover() {
+        return cover;
     }
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 }

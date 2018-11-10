@@ -1,19 +1,18 @@
 package com.banyan.tube.mapper;
 
-import java.util.List;
-
-import com.banyan.tube.entity.UserEntity;
+import com.banyan.tube.entity.User;
 
 public interface UserMapper {
 	
-	List<UserEntity> getAll();
-	
-	UserEntity getOne(Long id);
+    int deleteByPrimaryKey(Integer id);
 
-	void insert(UserEntity user);
+    int insert(User record);
 
-	void update(UserEntity user);
+    int insertSelective(User record);
 
-	void delete(Long id);
+    User selectByPrimaryKey(Integer id);
 
+    int updateByPrimaryKeySelective(User record);
+
+    int updateByPrimaryKey(User record);
 }

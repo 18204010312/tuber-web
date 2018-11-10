@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.banyan.tube.entity.TubeVideo;
-import com.banyan.tube.mapper.TubeVideoMapper;
+import com.banyan.tube.entity.Video;
+import com.banyan.tube.mapper.VideoMapper;
 
 @RestController
 @RequestMapping("/video")
@@ -28,30 +28,30 @@ public class VideoController {
 
 	
 	@Autowired
-	private TubeVideoMapper videoMapper;
+	private VideoMapper videoMapper;
 
 	@GetMapping
 	public ModelAndView list() {
-		List<TubeVideo> users = videoMapper.getAll();
-		logger.info("test log: UserController-list");
-		return new ModelAndView("video/index", "users", users);
+		List<Video> videos = videoMapper.selectAll();
+		logger.info("test log: VideoController-list");
+		return new ModelAndView("video/index", "videos", videos);
 	}
 
 	@GetMapping("{id}")
 	public ModelAndView view(@PathVariable("id") Integer id) {
-		TubeVideo videoR = videoMapper.selectByPrimaryKey(id);
-		return new ModelAndView("users/view", "user", videoR);
+		Video videoR = videoMapper.selectByPrimaryKey(id);
+		return new ModelAndView("videos/view", "user", videoR);
 	}
 
 	@GetMapping(params = "form")
-	public String createForm(@ModelAttribute TubeVideo user) {
-		return "users/form";
+	public String createForm(@ModelAttribute Video user) {
+		return "videos/form";
 	}
 
 	@PostMapping
-	public ModelAndView create(@Valid TubeVideo user, BindingResult result, RedirectAttributes redirect) {
+	public ModelAndView create(@Valid Video user, BindingResult result, RedirectAttributes redirect) {
 		if (result.hasErrors()) {
-			return new ModelAndView("users/form", "formErrors", result.getAllErrors());
+			return new ModelAndView("videos/form", "formErrors", result.getAllErrors());
 		}
 		this.videoMapper.insert(user);
 		redirect.addFlashAttribute("globalMessage", "Successfully created a new message");
@@ -59,7 +59,7 @@ public class VideoController {
 	}
 
 	// @RequestMapping("/add")
-	// public void save(TubeVideo user) {
+	// public void save(Video user) {
 	// videoMapper.insert(user);
 	// }
 
@@ -75,7 +75,7 @@ public class VideoController {
 	}
 
 	@GetMapping(value = "modify/{id}")
-	public ModelAndView modifyForm(@PathVariable("id") TubeVideo user) {
+	public ModelAndView modifyForm(@PathVariable("id") Video user) {
 		videoMapper.updateByPrimaryKey(user);
 		return list();
 	}

@@ -18,13 +18,21 @@
             targetProject="tube-web" />
         <javaClientGenerator targetPackage="com.banyan.tube.mapper"
             targetProject="tube-web" type="XMLMAPPER" />
-        <table schema="TubeComment" tableName="tube_comment"
+        <table schema="token_tube" tableName="tube_comment"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" domainObjectName="TubeComment"></table>
-        <table schema="TubeVideo" tableName="tube_video"
+            selectByExampleQueryId="false" domainObjectName="Comment"></table>
+        <table schema="token_tube" tableName="tube_video"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
-            selectByExampleQueryId="false" domainObjectName="TubeVideo"></table>
+            selectByExampleQueryId="false" domainObjectName="Video"></table>
+         <table schema="token_tube" tableName="tube_user"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false" domainObjectName="User"></table>
+          <table schema="token_tube" tableName="tube_token_history"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false" domainObjectName="TokenHistory"></table>
     </context>
 </generatorConfiguration>

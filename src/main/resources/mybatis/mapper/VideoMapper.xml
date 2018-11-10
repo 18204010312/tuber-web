@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.banyan.tube.mapper.TubeVideoMapper">
-  <resultMap id="baseResultMap" type="com.banyan.tube.entity.TubeVideo">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banyan.tube.mapper.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.banyan.tube.entity.Video">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="owner" jdbcType="INTEGER" property="owner" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -14,47 +14,46 @@
     <result column="up" jdbcType="INTEGER" property="up" />
     <result column="down" jdbcType="INTEGER" property="down" />
     <result column="reward" jdbcType="INTEGER" property="reward" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="accredit" jdbcType="TINYINT" property="accredit" />
     <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
   </resultMap>
-  <sql id="baseColumn">
+  <sql id="Base_Column_List">
     id, owner, create_time, update_time, statue, title, views, tags, links, up, down, 
-    reward, description, accredit, type,duration
+    reward, duration, description, accredit, type, cover
   </sql>
-  
-  <select id="selectByPrimaryKey" resultMap="baseResultMap"> 
-  select
-    <include refid="baseColumn" />
+  <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tube_video
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
     from tube_video
     where id = #{id,jdbcType=INTEGER}
-  </select>
-  
-   <select id="getAll" resultMap="baseResultMap"> 
-  select
-    <include refid="baseColumn" />
-    from tube_video
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tube_video
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.banyan.tube.entity.TubeVideo">
+  <insert id="insert" parameterType="com.banyan.tube.entity.Video">
     insert into tube_video (id, owner, create_time, 
       update_time, statue, title, 
       views, tags, links, 
-      up, down, reward, description, 
-      accredit, type, duration
-      )
+      up, down, reward, duration, 
+      description, accredit, type, 
+      cover)
     values (#{id,jdbcType=INTEGER}, #{owner,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{statue,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{views,jdbcType=INTEGER}, #{tags,jdbcType=VARCHAR}, #{links,jdbcType=VARCHAR}, 
-      #{up,jdbcType=INTEGER}, #{down,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
-      #{accredit,jdbcType=TINYINT}, #{type,jdbcType=INTEGER}, #{duration,jdbcType=INTEGER}
-      )
+      #{up,jdbcType=INTEGER}, #{down,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{duration,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{accredit,jdbcType=TINYINT}, #{type,jdbcType=INTEGER}, 
+      #{cover,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.banyan.tube.entity.TubeVideo">
+  <insert id="insertSelective" parameterType="com.banyan.tube.entity.Video">
     insert into tube_video
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -93,6 +92,9 @@
       <if test="reward != null">
         reward,
       </if>
+      <if test="duration != null">
+        duration,
+      </if>
       <if test="description != null">
         description,
       </if>
@@ -102,8 +104,8 @@
       <if test="type != null">
         type,
       </if>
-      <if test="duration != null">
-        duration,
+      <if test="cover != null">
+        cover,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -143,6 +145,9 @@
       <if test="reward != null">
         #{reward,jdbcType=INTEGER},
       </if>
+      <if test="duration != null">
+        #{duration,jdbcType=INTEGER},
+      </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
@@ -152,12 +157,12 @@
       <if test="type != null">
         #{type,jdbcType=INTEGER},
       </if>
-      <if test="duration != null">
-        #{duration,jdbcType=INTEGER},
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.banyan.tube.entity.TubeVideo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.banyan.tube.entity.Video">
     update tube_video
     <set>
       <if test="owner != null">
@@ -193,6 +198,9 @@
       <if test="reward != null">
         reward = #{reward,jdbcType=INTEGER},
       </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=INTEGER},
+      </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
@@ -202,13 +210,13 @@
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="duration != null">
-        duration = #{duration,jdbcType=INTEGER},
+      <if test="cover != null">
+        cover = #{cover,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.banyan.tube.entity.TubeVideo">
+  <update id="updateByPrimaryKey" parameterType="com.banyan.tube.entity.Video">
     update tube_video
     set owner = #{owner,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -221,28 +229,11 @@
       up = #{up,jdbcType=INTEGER},
       down = #{down,jdbcType=INTEGER},
       reward = #{reward,jdbcType=INTEGER},
+      duration = #{duration,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       accredit = #{accredit,jdbcType=TINYINT},
       type = #{type,jdbcType=INTEGER},
-      duration = #{duration,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.banyan.tube.entity.TubeVideo">
-    update tube_video
-    set owner = #{owner,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      statue = #{statue,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      views = #{views,jdbcType=INTEGER},
-      tags = #{tags,jdbcType=VARCHAR},
-      links = #{links,jdbcType=VARCHAR},
-      up = #{up,jdbcType=INTEGER},
-      down = #{down,jdbcType=INTEGER},
-      reward = #{reward,jdbcType=INTEGER},
-      description = #{description,jdbcType=VARCHAR},
-      accredit = #{accredit,jdbcType=TINYINT},
-      type = #{type,jdbcType=INTEGER}
+      cover = #{cover,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

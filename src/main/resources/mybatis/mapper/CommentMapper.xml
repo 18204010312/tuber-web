@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banyan.tube.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.banyan.tube.entity.Comment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="owner" jdbcType="INTEGER" property="owner" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="video_id" jdbcType="INTEGER" property="videoId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="up" jdbcType="INTEGER" property="up" />
+    <result column="down" jdbcType="INTEGER" property="down" />
+    <result column="reward" jdbcType="INTEGER" property="reward" />
+    <result column="statue" jdbcType="INTEGER" property="statue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, owner, update_time, parent_id, video_id, content, up, down, reward, 
+    statue
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tube_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tube_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.banyan.tube.entity.Comment">
+    insert into tube_comment (id, create_time, owner, 
+      update_time, parent_id, video_id, 
+      content, up, down, 
+      reward, statue)
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{owner,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{parentId,jdbcType=INTEGER}, #{videoId,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{up,jdbcType=INTEGER}, #{down,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{statue,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.banyan.tube.entity.Comment">
+    insert into tube_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="owner != null">
+        owner,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="videoId != null">
+        video_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="up != null">
+        up,
+      </if>
+      <if test="down != null">
+        down,
+      </if>
+      <if test="reward != null">
+        reward,
+      </if>
+      <if test="statue != null">
+        statue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="owner != null">
+        #{owner,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="videoId != null">
+        #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="up != null">
+        #{up,jdbcType=INTEGER},
+      </if>
+      <if test="down != null">
+        #{down,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="statue != null">
+        #{statue,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.banyan.tube.entity.Comment">
+    update tube_comment
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="owner != null">
+        owner = #{owner,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="videoId != null">
+        video_id = #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="up != null">
+        up = #{up,jdbcType=INTEGER},
+      </if>
+      <if test="down != null">
+        down = #{down,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        reward = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="statue != null">
+        statue = #{statue,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.banyan.tube.entity.Comment">
+    update tube_comment
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      owner = #{owner,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      video_id = #{videoId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      up = #{up,jdbcType=INTEGER},
+      down = #{down,jdbcType=INTEGER},
+      reward = #{reward,jdbcType=INTEGER},
+      statue = #{statue,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

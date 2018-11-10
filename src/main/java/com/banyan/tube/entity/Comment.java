@@ -3,7 +3,7 @@ package com.banyan.tube.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TubeComment implements Serializable {
+public class Comment implements Serializable {
     private Integer id;
 
     private Date createTime;
