@@ -13,28 +13,28 @@
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th:block th:if="false">
 						<th>ID</th>
-						</th:block>
 						<th>title</th>
 						<th>views</th>
+						<th>owner</th>
 						<th>tags</th>
 						<th>links</th>
+						<th>The summary</th>
 					</tr>
 				</thead>
 				<tbody>
-				<th:block th:if="false">
 					<tr th:if="${videos.empty}">
 						<td colspan="5">No video</td>
 					</tr>
-					</th:block>
 					<tr th:each="video : ${videos}">
-						<td th:text="${video.title}"></td>
-						<td th:text="${video.views}"></td>
-						<td th:text="${video.tags}"></td>
-						<td th:text="${video.links}"></td>
-						<td><a href="view.html" th:href="@{'/videos/' + ${video.id}}"
-							th:text="links"> The summary </a></td>
+						<td th:text="${video.video.id}"></td>
+						<td th:text="${video.video.title}"></td>
+						<td th:text="${video.user.name}"></td>
+						<td th:text="${video.video.views}"></td>
+						<td th:text="${video.video.tags}"></td>
+						<td th:text="${video.video.links}"></td>
+						<td><a href="view.html" th:href="@{'/video/' + ${video.video.id}}"
+							th:text="${video.video.title}"> The summary </a></td>
 					</tr>
 				</tbody>
 			</table>

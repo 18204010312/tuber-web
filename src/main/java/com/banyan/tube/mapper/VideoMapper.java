@@ -6,7 +6,7 @@ import com.banyan.tube.entity.Video;
 
 public interface VideoMapper {
 	
-	List<Video> selectAll();
+	List<Video> selectAll(Integer id);
 	
     int deleteByPrimaryKey(Integer id);
 

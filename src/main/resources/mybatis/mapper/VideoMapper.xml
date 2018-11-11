@@ -24,11 +24,12 @@
     id, owner, create_time, update_time, statue, title, views, tags, links, up, down, 
     reward, duration, description, accredit, type, cover
   </sql>
-  <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select 
     <include refid="Base_Column_List" />
-    from tube_video
-  </select>
+    from tube_video 
+    where owner = #{owner,jdbcType=INTEGER}
+  </select>	
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
