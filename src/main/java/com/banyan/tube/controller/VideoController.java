@@ -3,6 +3,7 @@ package com.banyan.tube.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ import com.banyan.tube.form.VideoForm;
 import com.banyan.tube.mapper.CommentMapper;
 import com.banyan.tube.mapper.UserMapper;
 import com.banyan.tube.mapper.VideoMapper;
+import com.banyan.tube.service.VideoService;
 
 @RestController
 @RequestMapping("/video")
@@ -33,49 +35,38 @@ public class VideoController {
 
 	private final static Logger logger = LoggerFactory.getLogger(VideoController.class);
 
-	
 	@Autowired
 	private VideoMapper videoMapper;
-	
+
 	@Autowired
 	private UserMapper userMapper;
-	
+
 	@Autowired
 	private CommentMapper commentMapper;
 
+	@Resource
+	private VideoService videoService;
+
 	@GetMapping
 	public ModelAndView list() {
-		List<Video> videos = videoMapper.selectAll(1);
-		List<VideoForm> videoForms = new ArrayList<>();
-		for(Video video:videos) {
-			VideoForm videoForm = new VideoForm();
-			videoForm.setVideo(video);
-			User user = userMapper.selectByPrimaryKey(video.getOwner());
-			videoForm.setUser(user);
-			videoForms.add(videoForm);
-		}
-		
+		List<VideoForm> videoForms = videoService.selectAll(1);
+
 		logger.info("test log: VideoController-list");
 		return new ModelAndView("video/index", "videos", videoForms);
 	}
 
+	@GetMapping("search")
+	public ModelAndView search(@ModelAttribute VideoForm form) {
+		List<VideoForm> videoList = videoService.search(form);
+
+		logger.info("test log: VideoController-search");
+		return new ModelAndView("video/index", "videos", videoList);
+	}
+
 	@GetMapping("view/{id}")
 	public ModelAndView view(@PathVariable("id") Integer id) {
-		VideoForm videoF = new VideoForm();
-		Video video = videoMapper.selectByPrimaryKey(id);
-		videoF.setVideo(video);
-		List<Comment> comments = commentMapper.selectByVideoId(id);
-		
-		List<CommentForm> commentFs = new ArrayList<>();
-		videoF.setComments(commentFs);
-		for(Comment comment:comments) {
-			CommentForm form = new CommentForm();
-			form.setComment(comment);
-			User user = userMapper.selectByPrimaryKey(comment.getOwner());
-			form.setUser(user);
-			commentFs.add(form);
-		}
-		
+		VideoForm videoF = videoService.view(id);
+
 		return new ModelAndView("video/view", "video", videoF);
 	}
 

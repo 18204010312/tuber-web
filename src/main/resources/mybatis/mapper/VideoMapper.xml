@@ -30,6 +30,30 @@
     from tube_video 
     where owner = #{owner,jdbcType=INTEGER}
   </select>	
+  <select id="search" resultMap="BaseResultMap" parameterType="com.banyan.tube.form.VideoForm">
+    select 
+    <include refid="Base_Column_List" />
+    from tube_video 
+   <trim prefix="where" prefixOverrides="and">
+     <if test="searchKey !=null and searchKey.size()>0">  
+		<foreach collection="searchKey" index="index" item="item" open="(" separator="and" close=")">
+	        	title like CONCAT('%',#{item},'%')
+		</foreach> 
+	</if>
+	<if test="chooseTags !=null and chooseTags.size()>0">   
+		<foreach collection="chooseTags" index="index" item="item" open="(" separator="or" close=")">
+	        	tags =#{item} 
+		</foreach> 
+	</if>
+   </trim>
+   <trim prefix="order by">
+	    <foreach collection="sortKey" index="index" item="item" separator=",">
+             #{item}    
+   		</foreach>  
+  	</trim>
+    
+  </select>	
+   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
